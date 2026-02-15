@@ -1,0 +1,30 @@
+workflows:
+
+  shofyou-debug:
+
+    name: Shofyou Debug APK
+
+    max_build_duration: 60
+
+    environment:
+
+      java: 17
+
+    scripts:
+
+      - name: Grant execute permission to gradlew
+        script: chmod +x gradlew
+
+      - name: Build Debug APK
+        script: ./gradlew assembleDebug
+
+ 
+
+    publishing:
+
+      email:
+        recipients:
+          - alexpaolo@gmail.com
+        notify:
+          success: true
+          failure: true
