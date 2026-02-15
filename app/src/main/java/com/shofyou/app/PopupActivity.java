@@ -3,6 +3,7 @@ package com.shofyou.app;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +16,7 @@ public class PopupActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_popup);
 
         webView = findViewById(R.id.webview);
 
@@ -23,10 +24,12 @@ public class PopupActivity extends AppCompatActivity {
 
         webView.setWebViewClient(new WebViewClient());
 
-        String url =
-                getIntent().getStringExtra("url");
+        String url = getIntent().getStringExtra("url");
 
         webView.loadUrl(url);
-    }
 
+        ImageView close = findViewById(R.id.close);
+
+        close.setOnClickListener(v -> finish());
+    }
 }
