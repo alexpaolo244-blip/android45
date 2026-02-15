@@ -3,9 +3,12 @@ package com.shofyou.app;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -32,7 +35,28 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        // جعل الخلفية شفافة
         getWindow().setStatusBarColor(Color.TRANSPARENT);
+
+        // تغيير لون الايقونات حسب وضع الهاتف (نهار / ليل)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            int nightModeFlags =
+                    getResources().getConfiguration().uiMode
+                            & Configuration.UI_MODE_NIGHT_MASK;
+
+            if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+
+                // الوضع الليلي → ايقونات بيضاء
+                getWindow().getDecorView().setSystemUiVisibility(0);
+
+            } else {
+
+                // الوضع النهاري → ايقونات سوداء
+                getWindow().getDecorView().setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            }
+        }
 
         webView = findViewById(R.id.webview);
 
@@ -50,10 +74,9 @@ public class MainActivity extends AppCompatActivity {
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
 
         webView.setWebViewClient(new Browser());
-
         webView.setWebChromeClient(new Chrome());
 
-        if(savedInstanceState != null)
+        if (savedInstanceState != null)
             webView.restoreState(savedInstanceState);
         else
             webView.loadUrl(HOME_URL);
@@ -69,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
             String url = request.getUrl().toString();
 
-            if(url.contains("shofyou.com")) {
+            if (url.contains("shofyou.com")) {
 
                 view.loadUrl(url);
                 return true;
@@ -96,11 +119,8 @@ public class MainActivity extends AppCompatActivity {
 
             fileCallback = callback;
 
-            Intent intent =
-                    new Intent(Intent.ACTION_PICK);
-
+            Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/* video/*");
-
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
 
             startActivityForResult(intent, 100);
@@ -114,11 +134,11 @@ public class MainActivity extends AppCompatActivity {
                                     int resultCode,
                                     Intent data) {
 
-        if(fileCallback == null) return;
+        if (fileCallback == null) return;
 
         Uri[] result = null;
 
-        if(resultCode == RESULT_OK && data != null) {
+        if (resultCode == RESULT_OK && data != null) {
 
             result = new Uri[]{data.getData()};
         }
@@ -137,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void handleOnBackPressed() {
 
-                if(webView.canGoBack())
+                if (webView.canGoBack())
                     webView.goBack();
 
                 else {
@@ -145,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                     new AlertDialog.Builder(MainActivity.this)
                             .setMessage("Exit app?")
                             .setPositiveButton("Yes",
-                                    (d,i)->finish())
+                                    (d, i) -> finish())
                             .setNegativeButton("No", null)
                             .show();
                 }
@@ -157,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
 
         webView.saveState(outState);
-
         super.onSaveInstanceState(outState);
     }
 
