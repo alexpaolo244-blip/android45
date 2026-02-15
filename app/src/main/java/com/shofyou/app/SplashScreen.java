@@ -1,4 +1,4 @@
-package sngine.app.webview;
+package com.shofyou.app;
 
 import android.app.Activity;
 import android.content.Intent;
