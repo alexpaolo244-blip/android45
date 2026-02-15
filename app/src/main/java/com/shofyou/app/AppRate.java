@@ -1,4 +1,4 @@
-package sngine.app.webview;
+package com.shofyou.app;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -8,13 +8,13 @@ import android.view.View;
 
 import java.util.Date;
 
-import static sngine.app.webview.DialogManager.create;
-import static sngine.app.webview.PreferenceHelper.getInstallDate;
-import static sngine.app.webview.PreferenceHelper.getIsAgreeShowDialog;
-import static sngine.app.webview.PreferenceHelper.getLaunchTimes;
-import static sngine.app.webview.PreferenceHelper.getRemindInterval;
-import static sngine.app.webview.PreferenceHelper.isFirstLaunch;
-import static sngine.app.webview.PreferenceHelper.setInstallDate;
+import static com.shofyou.app.DialogManager.create;
+import static com.shofyou.app.PreferenceHelper.getInstallDate;
+import static com.shofyou.app.PreferenceHelper.getIsAgreeShowDialog;
+import static com.shofyou.app.PreferenceHelper.getLaunchTimes;
+import static com.shofyou.app.PreferenceHelper.getRemindInterval;
+import static com.shofyou.app.PreferenceHelper.isFirstLaunch;
+import static com.shofyou.app.PreferenceHelper.setInstallDate;
 
 public final class AppRate {
 
